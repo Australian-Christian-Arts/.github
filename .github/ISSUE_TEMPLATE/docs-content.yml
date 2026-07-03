@@ -1,0 +1,27 @@
+name: Docs or content change
+description: Documentation, content, copy, knowledge, or template correction.
+title: "Docs: "
+labels:
+  - needs:triage
+  - type:docs
+  - priority:p3
+body:
+  - type: textarea
+    id: change
+    attributes:
+      label: What needs changing?
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Source of truth
+      description: Link or cite the canonical source that should drive the change.
+    validations:
+      required: true
+  - type: textarea
+    id: locations
+    attributes:
+      label: Affected locations
+      description: Repos, files, pages, templates, docs, or public URLs.
+

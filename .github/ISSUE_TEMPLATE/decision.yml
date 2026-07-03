@@ -1,0 +1,33 @@
+name: Ryan decision or approval
+description: A decision, go/no-go, or approval-gated item that should not be executed automatically.
+title: "Decision: "
+labels:
+  - needs:decision
+  - type:decision
+  - priority:p1
+body:
+  - type: textarea
+    id: decision
+    attributes:
+      label: Decision needed
+      description: State the decision in one clear sentence.
+    validations:
+      required: true
+  - type: textarea
+    id: options
+    attributes:
+      label: Options
+      description: List the practical options and trade-offs.
+    validations:
+      required: true
+  - type: textarea
+    id: recommendation
+    attributes:
+      label: Recommendation
+      description: Include the recommended option and why.
+  - type: textarea
+    id: payload
+    attributes:
+      label: Exact payload, if approving an action
+      description: Include the command, API payload, recipients, records, or deploy target.
+

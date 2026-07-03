@@ -1,0 +1,45 @@
+name: Bug or regression
+description: Something is broken, stale, incorrect, or behaving differently from expected.
+title: "Bug: "
+labels:
+  - needs:triage
+  - type:bug
+  - priority:p2
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What is broken?
+      description: Describe the failure in concrete terms.
+      placeholder: "Example: The Team AI deploy is green, but /version still shows the previous commit."
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Links, logs, screenshots, failing command output, URLs, or workflow run IDs.
+    validations:
+      required: true
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      options:
+        - Blocks production or member-facing work
+        - Degrades an internal workflow
+        - Cosmetic or documentation only
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behaviour
+    validations:
+      required: true
+  - type: textarea
+    id: notes
+    attributes:
+      label: Extra context
+      description: Include repo, branch, deployment target, or related issue links when known.
+

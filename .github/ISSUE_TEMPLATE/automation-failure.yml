@@ -1,0 +1,46 @@
+name: Automation failure
+description: n8n, Zoho, Coolify, GitHub Actions, sync, webhook, or scheduled-job failure.
+title: "Automation: "
+labels:
+  - needs:triage
+  - type:automation
+  - domain:automation
+  - priority:p1
+body:
+  - type: input
+    id: system
+    attributes:
+      label: System
+      placeholder: "Example: GitHub Actions, self-hosted n8n, Coolify deploy, Zoho webhook, Team AI sync"
+    validations:
+      required: true
+  - type: textarea
+    id: failure
+    attributes:
+      label: Failure summary
+      description: What failed, when, and how you noticed.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence
+      description: Run URL, execution ID, log excerpt, endpoint, repo, workflow name, or exact error.
+    validations:
+      required: true
+  - type: dropdown
+    id: send_or_write_risk
+    attributes:
+      label: Could the repair send, delete, or bulk-write anything?
+      options:
+        - "No"
+        - "Yes, approval required before repair"
+        - "Unsure, investigate first"
+    validations:
+      required: true
+  - type: textarea
+    id: safe_next_step
+    attributes:
+      label: Safe next step
+      description: Prefer a read-only diagnostic or reversible repair first.
+

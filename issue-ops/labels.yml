@@ -1,0 +1,76 @@
+# Shared AChA issue labels. Apply per repository; GitHub labels do not inherit
+# from the organisation .github repository.
+labels:
+  - name: needs:triage
+    color: FBCA04
+    description: Needs first pass, routing, priority, or owner.
+  - name: needs:decision
+    color: D93F0B
+    description: Requires Ryan decision or approval before execution.
+  - name: needs:review
+    color: 5319E7
+    description: Needs review before merge, deploy, or closure.
+  - name: priority:p0
+    color: B60205
+    description: Critical production or member-facing breakage.
+  - name: priority:p1
+    color: D93F0B
+    description: High priority operational issue.
+  - name: priority:p2
+    color: FBCA04
+    description: Normal priority issue.
+  - name: priority:p3
+    color: C2E0C6
+    description: Low priority improvement or cleanup.
+  - name: type:bug
+    color: D73A4A
+    description: Behaviour is broken or regressed.
+  - name: type:automation
+    color: 1D76DB
+    description: n8n, workflow, webhook, scheduled job, or integration issue.
+  - name: type:decision
+    color: D93F0B
+    description: Decision or approval item.
+  - name: type:docs
+    color: 0075CA
+    description: Documentation, knowledge, or content update.
+  - name: type:task
+    color: 7057FF
+    description: Tracked operational task or work order.
+  - name: type:security
+    color: B60205
+    description: Security, token, permission, or access-control issue.
+  - name: domain:automation
+    color: BFD4F2
+    description: Workflow automation, n8n, Make, or scheduled jobs.
+  - name: domain:api
+    color: BFD4F2
+    description: API server, Coolify, AWS, or service endpoint.
+  - name: domain:crm
+    color: BFD4F2
+    description: Zoho CRM, fields, automations, Deluge, or records.
+  - name: domain:knowledge
+    color: BFD4F2
+    description: Knowledge, memory, docs, or content sync.
+  - name: domain:team-ai
+    color: BFD4F2
+    description: AChA Team AI app or assistant runtime.
+  - name: domain:templates
+    color: BFD4F2
+    description: AChA template library, CTA, merge tags, or journey copy.
+  - name: domain:website
+    color: BFD4F2
+    description: Public website, pages, DNS, or web deploys.
+  - name: status:blocked
+    color: E4E669
+    description: Blocked by external dependency or approval.
+  - name: status:in-progress
+    color: 0E8A16
+    description: Work has started.
+  - name: status:ready
+    color: 0E8A16
+    description: Ready for review, deploy, or action.
+  - name: status:deployed
+    color: 5319E7
+    description: Merged/deployed and waiting for final verification or closure.
+

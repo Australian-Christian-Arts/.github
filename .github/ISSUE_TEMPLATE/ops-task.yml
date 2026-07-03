@@ -1,0 +1,33 @@
+name: Ops task or work order
+description: A concrete task that should be tracked to completion.
+title: "Task: "
+labels:
+  - needs:triage
+  - type:task
+  - priority:p2
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: Desired outcome
+      description: What should be true when this is done?
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Repos, systems, contacts, automations, or documents involved.
+    validations:
+      required: true
+  - type: textarea
+    id: constraints
+    attributes:
+      label: Constraints or approval gates
+      placeholder: "Example: No emails sent. No CRM writes. Ryan approval required before production publish."
+  - type: textarea
+    id: verification
+    attributes:
+      label: Verification needed
+      description: Command, live endpoint, workflow run, screenshot, or audit result that proves completion.
+
