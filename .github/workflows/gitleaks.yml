@@ -1,0 +1,62 @@
+# Secret scan with gitleaks (Ryan, 2026-10-26: "Gitleaks in CI", in place of paid
+# GitHub secret scanning). It scans only the commits a PR or push adds, so findings
+# already in history do not turn it red; run it by hand with full_history to see those.
+# Config and allowlists: .gitleaks.toml. Output is redacted: no secret value is printed.
+name: gitleaks
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      full_history:
+        description: Scan the whole history instead of the last commit
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      GITLEAKS_VERSION: 8.30.1
+      GITLEAKS_SHA256: 551f6fc83ea457d62a0d98237cbad105af8d557003051f41f3e7ca7b3f2470eb
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install gitleaks (pinned, checksum verified)
+        run: |
+          curl -sSfL -o gitleaks.tgz "https://github.com/gitleaks/gitleaks/releases/download/v${GITLEAKS_VERSION}/gitleaks_${GITLEAKS_VERSION}_linux_x64.tar.gz"
+          echo "${GITLEAKS_SHA256}  gitleaks.tgz" | sha256sum -c -
+          tar -xzf gitleaks.tgz -C "$RUNNER_TEMP" gitleaks
+          rm gitleaks.tgz
+
+      - name: Scan new commits
+        env:
+          EVENT: ${{ github.event_name }}
+          PR_BASE: ${{ github.event.pull_request.base.sha }}
+          PR_HEAD: ${{ github.event.pull_request.head.sha }}
+          PUSH_BEFORE: ${{ github.event.before }}
+          PUSH_AFTER: ${{ github.sha }}
+          FULL: ${{ inputs.full_history }}
+        run: |
+          set -euo pipefail
+          zero=0000000000000000000000000000000000000000
+          if [ "$EVENT" = pull_request ]; then
+            opts="${PR_BASE}..${PR_HEAD}"
+          elif [ "$EVENT" = push ] && [ "$PUSH_BEFORE" != "$zero" ] && git cat-file -e "${PUSH_BEFORE}^{commit}" 2>/dev/null; then
+            opts="${PUSH_BEFORE}..${PUSH_AFTER}"
+          elif [ "$FULL" = true ]; then
+            opts="--all"
+          else
+            opts="-1 ${PUSH_AFTER}"
+          fi
+          echo "Scanning: git log ${opts}"
+          "$RUNNER_TEMP/gitleaks" git . --redact --no-banner --log-opts="${opts}" --exit-code 1
