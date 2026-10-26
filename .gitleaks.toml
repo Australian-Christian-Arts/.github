@@ -1,0 +1,42 @@
+# gitleaks config for the secret-scan CI check (Ryan, 2026-10-26: "Gitleaks in CI").
+# The default rules all apply. The allowlists cover known non-secret shapes only;
+# keep each one narrow and say why. A real secret is rotated, never allowlisted.
+title = "AChA gitleaks"
+
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Tally form field keys (question_<id> or question_<id>_<uuid>) are field names, not secrets"
+regexTarget = "match"
+regexes = ['''key": ?"question_[A-Za-z0-9]{6}(_[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})?"''']
+
+[[allowlists]]
+description = "JSON \"key\" fields holding a lowercase slug (template, link or file ids such as event-reminder.sms-01); a slug always has a separator, a hex token never does"
+regexTarget = "match"
+regexes = ['''key": ?"[a-z][a-z0-9]*([._-][a-z0-9]+)+"''']
+
+[[allowlists]]
+description = "Zoho api_name / field_api values (Lead_Source, Contacts.Youth_Alias_Email) are field names, not secrets"
+regexTarget = "match"
+regexes = ['''(api_name|field_api|api)": ?"[A-Z][A-Za-z0-9_.]*"''']
+
+[[allowlists]]
+description = "Registry object_key values are n8n workflow ids and Zoho record or rule ids, not secrets (acha-semantics live/ and registers/)"
+regexTarget = "match"
+regexes = ['''object_key": ?"[A-Za-z0-9_-]+"''']
+
+[[allowlists]]
+description = "Commit and file hashes (sha, commit, *_sha256) are public digests, not secrets"
+regexTarget = "match"
+regexes = ['''(sha|commit|sha256)[A-Za-z0-9_]*"?\s*[:=]\s*["']?[0-9a-f]{40,64}["']?''']
+
+[[allowlists]]
+description = "Readable idempotency keys in tests (word-word-word-123)"
+regexTarget = "match"
+regexes = ['''idempotency_key\s*:\s*'[a-z0-9]+(-[a-z0-9]+)+'''']
+
+[[allowlists]]
+description = "Test fixtures use readable fake approval tokens (approval-<word>-<word>)"
+regexTarget = "match"
+regexes = ['''approval_token=approval-[A-Za-z0-9]+-[A-Za-z0-9]+''']
