@@ -1,0 +1,4 @@
+# Session tooling state that Claude Code plugins write into the working copy.
+# It is never organisation content and must not land in this public repository.
+.claude/handoff-nudge-state.json
+.no-amnesia/
