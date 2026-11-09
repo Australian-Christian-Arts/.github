@@ -1,0 +1,6 @@
+# Runtime state written by local agent hooks and plugins (session memory, handoff
+# nudges). It is per-machine scratch, never organisation configuration, and this
+# repository is public: keep it out of every commit.
+.remember/
+.no-amnesia/
+.claude/handoff-nudge-state.json
