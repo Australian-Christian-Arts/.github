@@ -8,3 +8,6 @@
 # compaction. This repository has no project CLAUDE.md of its own, so that file is
 # runtime state too.
 /CLAUDE.md
+# The handoff plugin writes session handoff notes (.claude/handoffs/HANDOFF_<time>.md and LATEST.md) into the
+# working tree on session events: session notes, not organisation configuration.
+.claude/handoffs/
