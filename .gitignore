@@ -4,3 +4,7 @@
 .remember/
 .no-amnesia/
 .claude/handoff-nudge-state.json
+# The context-recovery hook rewrites a root CLAUDE.md with session state after every
+# compaction. This repository has no project CLAUDE.md of its own, so that file is
+# runtime state too.
+/CLAUDE.md
